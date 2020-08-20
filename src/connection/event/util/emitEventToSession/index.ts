@@ -1,8 +1,4 @@
-import {
-  deleteConnectionById,
-  getSessionById,
-  updateSessionConnections,
-} from '../../../../util/database';
+import { getSessionById, updateSessionConnections } from '../../../../util/database';
 import apiGatewayManagementApi from '../apiGatewayManagementApi';
 
 export default async function emitEventToSession(
@@ -29,11 +25,9 @@ export default async function emitEventToSession(
           .promise()
           .catch(error => {
             if (error.statusCode === 410) {
-              console.log(`Removing stale connection "${connection}"`);
+              console.log(`Found stale connection "${connection}"`);
 
               staleConnections.push(connection);
-
-              deleteConnectionById(connection);
             } else {
               throw new Error(error);
             }

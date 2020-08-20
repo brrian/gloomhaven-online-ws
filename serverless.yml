@@ -38,16 +38,6 @@ custom:
       - ${self:provider.stage}
 
 functions:
-  connect:
-    handler: src/connection/connect/index.default
-    events:
-      - websocket:
-          route: $connect
-  disconnect:
-    handler: src/connection/disconnect/index.default
-    events:
-      - websocket:
-          route: $disconnect
   event:
     handler: src/connection/event/index.default
     events:

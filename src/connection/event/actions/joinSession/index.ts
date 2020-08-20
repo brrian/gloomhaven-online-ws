@@ -1,8 +1,4 @@
-import {
-  getSessionById,
-  setSessionForConnection,
-  updateSessionConnections,
-} from '../../../../util/database';
+import { getSessionById, updateSessionConnections } from '../../../../util/database';
 import { Action } from '../../models';
 import emitEventToConnection from '../../util/emitEventToConnection';
 import emitEventToSession from '../../util/emitEventToSession';
@@ -13,8 +9,6 @@ interface Payload {
 
 const joinSession: Action<Payload> = async ({ sessionId }, { connectionId }) => {
   try {
-    setSessionForConnection(connectionId, sessionId);
-
     const session = await getSessionById(sessionId);
 
     if (session.connections.includes(connectionId) === false) {
