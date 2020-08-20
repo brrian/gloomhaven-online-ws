@@ -1,10 +1,10 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import {
   deleteConnectionById,
+  deleteSessionById,
   getConnectionById,
   getSessionById,
   updateSessionConnections,
-  deleteSessionById,
 } from '../../util/database';
 
 const handler: APIGatewayProxyHandler = async event => {

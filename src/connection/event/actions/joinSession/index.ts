@@ -5,6 +5,7 @@ import {
 } from '../../../../util/database';
 import { Action } from '../../models';
 import emitEventToConnection from '../../util/emitEventToConnection';
+import emitEventToSession from '../../util/emitEventToSession';
 
 interface Payload {
   sessionId: string;
@@ -22,8 +23,20 @@ const joinSession: Action<Payload> = async ({ sessionId }, { connectionId }) => 
 
     emitEventToConnection(connectionId, {
       action: 'sessionJoined',
-      payload: session,
+      payload: {
+        connections: session.connections,
+        session,
+      },
     });
+
+    emitEventToSession(
+      sessionId,
+      {
+        action: 'userJoined',
+        payload: connectionId,
+      },
+      [connectionId]
+    );
   } catch (error) {
     console.error(`Unable to join session "${sessionId}": "${error.message}"`);
   }

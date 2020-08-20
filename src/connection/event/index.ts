@@ -1,14 +1,16 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import createSession from './actions/createSession';
 import joinSession from './actions/joinSession';
-import updatePlop from './actions/updatePlop';
+import returnSignal from './actions/returnSignal';
+import sendSignal from './actions/sendSignal';
 import updateScenario from './actions/updateScenario';
 import { Actions, EventBody } from './models';
 
 const ACTIONS: Actions = {
   createSession,
   joinSession,
-  updatePlop,
+  returnSignal,
+  sendSignal,
   updateScenario,
 };
 
