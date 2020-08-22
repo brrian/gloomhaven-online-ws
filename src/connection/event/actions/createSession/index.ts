@@ -8,7 +8,7 @@ const createSession: Action = async (_payload, { connectionId }) => {
 
   const session = await createSessionInDb(sessionId, connectionId);
 
-  emitEventToSession(sessionId, {
+  await emitEventToSession(sessionId, {
     action: 'sessionCreated',
     payload: session,
   });

@@ -12,12 +12,13 @@ const leaveSession: Action<Payload> = async ({ sessionId }, { connectionId }) =>
 
     session.connections = session.connections.filter(connection => connection !== connectionId);
 
-    await updateSessionConnections(sessionId, session.connections);
-
-    emitEventToSession(sessionId, {
-      action: 'userLeft',
-      payload: connectionId,
-    });
+    await Promise.all([
+      updateSessionConnections(sessionId, session.connections),
+      emitEventToSession(sessionId, {
+        action: 'userLeft',
+        payload: connectionId,
+      }),
+    ]);
   } catch (error) {
     console.error(`Unable to leave session "${sessionId}": "${error.message}"`);
   }

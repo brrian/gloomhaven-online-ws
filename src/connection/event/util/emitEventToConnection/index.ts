@@ -2,7 +2,7 @@ import apiGatewayManagementApi from '../apiGatewayManagementApi';
 
 export default async function emitEventToConnection(connectionId: string, event: any) {
   try {
-    apiGatewayManagementApi
+    await apiGatewayManagementApi
       .postToConnection({
         ConnectionId: connectionId,
         Data: JSON.stringify(event),

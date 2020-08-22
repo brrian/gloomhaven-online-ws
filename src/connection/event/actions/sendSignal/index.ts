@@ -8,7 +8,7 @@ interface Payload {
 
 const sendSignal: Action<Payload> = async ({ signal, targetConnection }, { connectionId }) => {
   try {
-    emitEventToConnection(targetConnection, {
+    await emitEventToConnection(targetConnection, {
       action: 'signalReceived',
       payload: {
         connectionId,

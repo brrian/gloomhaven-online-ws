@@ -23,7 +23,7 @@ const handler: APIGatewayProxyHandler = async event => {
     if (connectionId && event.body) {
       const { action, payload = {} } = JSON.parse(event.body) as EventBody;
 
-      ACTIONS[action]?.(payload, { connectionId });
+      await ACTIONS[action]?.(payload, { connectionId });
     }
 
     return {

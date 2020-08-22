@@ -28,7 +28,7 @@ export interface Actions {
 export type Action<TPayload extends ActionPayload = any> = (
   payload: TPayload,
   meta: ActionMeta
-) => void;
+) => Promise<void>;
 
 interface ActionPayload {
   [key: string]: any;

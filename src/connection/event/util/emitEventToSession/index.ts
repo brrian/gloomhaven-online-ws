@@ -40,7 +40,7 @@ export default async function emitEventToSession(
         connection => !staleConnections.includes(connection)
       );
 
-      updateSessionConnections(sessionId, updatedConnections);
+      await updateSessionConnections(sessionId, updatedConnections);
     }
   } catch (error) {
     console.log(`Unable to emit event to session: "${error.message}"`);
