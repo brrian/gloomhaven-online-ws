@@ -13,13 +13,13 @@ export default async function emitEventToSession(
 
     await Promise.all(
       session.connections.map(connection => {
-        if (excludes?.includes(connection)) {
+        if (excludes?.includes(connection.id)) {
           return;
         }
 
         return apiGatewayManagementApi
           .postToConnection({
-            ConnectionId: connection,
+            ConnectionId: connection.id,
             Data: JSON.stringify(event),
           })
           .promise()
@@ -27,7 +27,7 @@ export default async function emitEventToSession(
             if (error.statusCode === 410) {
               console.log(`Found stale connection "${connection}"`);
 
-              staleConnections.push(connection);
+              staleConnections.push(connection.id);
             } else {
               throw new Error(error);
             }
@@ -37,7 +37,7 @@ export default async function emitEventToSession(
 
     if (staleConnections.length) {
       const updatedConnections = session.connections.filter(
-        connection => !staleConnections.includes(connection)
+        connection => !staleConnections.includes(connection.id)
       );
 
       await updateSessionConnections(sessionId, updatedConnections);

@@ -1,8 +1,9 @@
 import { client as db, Schema } from '..';
+import { Connection } from '../../../connection/event/models';
 
 export default async function updateSessionConnections(
   sessionId: string,
-  connections: string[]
+  connections: Connection[]
 ): Promise<void> {
   await db
     .update({

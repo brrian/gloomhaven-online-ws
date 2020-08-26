@@ -1,7 +1,12 @@
 export interface Session {
-  connections: string[];
+  connections: Connection[];
   id: string;
   scenario: Scenario;
+}
+
+export interface Connection {
+  id: string;
+  name: string;
 }
 
 export interface Scenario {

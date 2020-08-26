@@ -3,10 +3,19 @@ import { createSession as createSessionInDb } from '../../../../util/database';
 import { Action } from '../../models';
 import emitEventToSession from '../../util/emitEventToSession';
 
-const createSession: Action = async (_payload, { connectionId }) => {
+interface Payload {
+  name: string;
+}
+
+const createSession: Action<Payload> = async ({ name }, { connectionId }) => {
   const sessionId = process.env.IS_OFFLINE ? '1234' : uuid();
 
-  const session = await createSessionInDb(sessionId, connectionId);
+  const connection = {
+    id: connectionId,
+    name,
+  };
+
+  const session = await createSessionInDb(sessionId, connection);
 
   await emitEventToSession(sessionId, {
     action: 'sessionCreated',

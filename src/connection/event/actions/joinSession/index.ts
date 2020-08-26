@@ -4,16 +4,22 @@ import emitEventToConnection from '../../util/emitEventToConnection';
 import emitEventToSession from '../../util/emitEventToSession';
 
 interface Payload {
+  name: string;
   sessionId: string;
 }
 
-const joinSession: Action<Payload> = async ({ sessionId }, { connectionId }) => {
+const joinSession: Action<Payload> = async ({ name, sessionId }, { connectionId }) => {
   try {
     const session = await getSessionById(sessionId);
 
+    const connection = {
+      id: connectionId,
+      name,
+    };
+
     await Promise.all([
-      session.connections.includes(connectionId) === false
-        ? updateSessionConnections(sessionId, [...session.connections, connectionId])
+      session.connections.some(({ id }) => id === connectionId) === false
+        ? updateSessionConnections(sessionId, [...session.connections, connection])
         : null,
       emitEventToConnection(connectionId, {
         action: 'sessionJoined',
@@ -26,7 +32,7 @@ const joinSession: Action<Payload> = async ({ sessionId }, { connectionId }) => 
         sessionId,
         {
           action: 'userJoined',
-          payload: connectionId,
+          payload: connection,
         },
         [connectionId]
       ),

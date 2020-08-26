@@ -1,8 +1,5 @@
 import { client as db, Schema } from '..';
-
-interface Session {
-  connections: string[];
-}
+import { Session } from '../../../connection/event/models';
 
 export default async function getSessionById(sessionId: string): Promise<Session> {
   const { Item } = await db

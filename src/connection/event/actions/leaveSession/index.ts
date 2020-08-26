@@ -10,7 +10,7 @@ const leaveSession: Action<Payload> = async ({ sessionId }, { connectionId }) =>
   try {
     const session = await getSessionById(sessionId);
 
-    session.connections = session.connections.filter(connection => connection !== connectionId);
+    session.connections = session.connections.filter(({ id }) => id !== connectionId);
 
     await Promise.all([
       updateSessionConnections(sessionId, session.connections),

@@ -1,17 +1,26 @@
-import { Action } from '../../models';
+import { getSessionById } from '../../../../util/database';
+import { Action, Connection } from '../../models';
 import emitEventToConnection from '../../util/emitEventToConnection';
 
 interface Payload {
-  targetConnection: string;
+  sessionId: string;
   signal: string;
+  targetConnection: Connection;
 }
 
-const returnSignal: Action<Payload> = async ({ targetConnection, signal }, { connectionId }) => {
+const returnSignal: Action<Payload> = async (
+  { sessionId, targetConnection, signal },
+  { connectionId }
+) => {
   try {
-    await emitEventToConnection(targetConnection, {
+    const { connections } = await getSessionById(sessionId);
+
+    const connection = connections.find(({ id }) => id === connectionId);
+
+    await emitEventToConnection(targetConnection.id, {
       action: 'returnSignalReceived',
       payload: {
-        connectionId,
+        connection,
         signal,
       },
     });

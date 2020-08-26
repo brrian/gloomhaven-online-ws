@@ -1,12 +1,12 @@
 import { client as db, Schema } from '..';
-import { Session } from '../../../connection/event/models';
+import { Connection, Session } from '../../../connection/event/models';
 
 export default async function createSession(
   sessionId: string,
-  connectionId: string
+  connection: Connection
 ): Promise<Session> {
   const session: Session = {
-    connections: [connectionId],
+    connections: [connection],
     id: sessionId,
     scenario: {
       assets: {},
