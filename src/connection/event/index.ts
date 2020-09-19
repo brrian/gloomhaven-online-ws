@@ -2,6 +2,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import createSession from './actions/createSession';
 import joinSession from './actions/joinSession';
 import leaveSession from './actions/leaveSession';
+import ping from './actions/ping';
 import returnSignal from './actions/returnSignal';
 import sendSignal from './actions/sendSignal';
 import updateScenario from './actions/updateScenario';
@@ -12,6 +13,7 @@ const ACTIONS: Actions = {
   joinSession,
   leaveSession,
   returnSignal,
+  ping,
   sendSignal,
   updateScenario,
 };
