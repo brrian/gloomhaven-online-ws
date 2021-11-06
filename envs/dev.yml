@@ -1,4 +1,4 @@
 vars:
-  API_GW_ENDPOINT: 'https://eewsrp1dui.execute-api.us-east-1.amazonaws.com/dev'
+  API_GW_ENDPOINT: 'https://sy0cv3khm7.execute-api.us-east-1.amazonaws.com/dev'
 
   DYNAMODB_TABLE: 'dev-us-east-1-gloomhaven-online'
